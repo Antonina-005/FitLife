@@ -17,7 +17,7 @@ def get_clean_name() -> str:
         if not name:
             print(
                 'Ошибка: имя не может быть пустым. '
-                'Пожалуйста, повторите ввод еще раз.'
+                'Пожалуйста, повторите ввод еще раз.',
             )
             continue
         return name
@@ -40,7 +40,7 @@ def get_valid_number(prompt: str, min_val: float, max_val: float) -> float:
             return value
         print(
             f'Ошибка: введите число в разумных пределах '
-            f'(от {min_val} до {max_val}).'
+            f'(от {min_val} до {max_val}).',
         )
 
 
@@ -106,6 +106,6 @@ print(f'Норма воды: {water_needed_liters} л')
 
 print(
     f'Рекомендация ВОЗ: для поддержания водного баланса '
-    f'вам необходимо выпивать {water_needed_liters} л воды в сутки.'
+    f'вам необходимо выпивать {water_needed_liters} л воды в сутки.',
 )
 print('Расчет окончен. Будьте здоровы!')

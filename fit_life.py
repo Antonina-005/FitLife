@@ -40,17 +40,22 @@ def get_valid_number(prompt: str, min_val: float, max_val: float) -> float:
             return value
         print(
             f'Ошибка: введите число в разумных пределах '
-            f'(от {min_val} до {max_val}).')
+            f'(от {min_val} до {max_val}).'
+        )
 
 
 # Основной блок сбора данных
 user_name = get_clean_name()
 
 user_age = int(
-    get_valid_number('Сколько тебе лет? ', 1.0, 120.0))
+    get_valid_number('Сколько тебе лет? ', 1.0, 120.0)
+)
 
 user_height = get_valid_number(
-    'Какой у тебя рост в метрах (например, 1.75)? ', 0.5, 2.5)
+    'Какой у тебя рост в метрах (например, 1.75)? ',
+    0.5,
+    2.5,
+)
 
 user_weight = get_valid_number('Какой у тебя вес в кг? ', 10.0, 300.0)
 
@@ -58,11 +63,15 @@ user_weight = get_valid_number('Какой у тебя вес в кг? ', 10.0, 
 # Расчеты
 # Расчет Индекса Массы Тела (ИМТ). Рост изначально в метрах.
 user_bmi = round(
-    user_weight / (user_height ** 2), 1)
+    user_weight / (user_height ** 2),
+    1
+)
 
 # Расчет суточной нормы воды в литрах
 water_needed_liters = round(
-    (user_weight * WATER_NORM_PER_KG_ML) / ML_IN_LITER, 2)
+    (user_weight * WATER_NORM_PER_KG_ML) / ML_IN_LITER,
+    2
+)
 
 
 # Определние склонения слова 'лет'
@@ -97,5 +106,6 @@ print(f'Норма воды: {water_needed_liters} л')
 
 print(
     f'Рекомендация ВОЗ: для поддержания водного баланса '
-    f'вам необходимо выпивать {water_needed_liters} л воды в сутки.')
+    f'вам необходимо выпивать {water_needed_liters} л воды в сутки.'
+)
 print('Расчет окончен. Будьте здоровы!')

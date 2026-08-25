@@ -1,17 +1,17 @@
 # Проект FitLife - MVP версия 1.0
 
 WATER_NORM_PER_KG_ML = 30  # Норма воды: 30 мл на 1 кг веса
-ML_IN_LITER = 1000         # Количество миллилитров в одном литре
+ML_IN_LITER = 1000         # Количество миллилитров в одном л.
 
 # Пороговые значения нормы ИМТ по ВОЗ
 BMI_LOW_NORM = 18.5
 BMI_HIGH_NORM = 25.0
 
-# Пороговые значения возраста для рекомендаций ВОЗ (целые числа)
+# Пороговые значения возраста для рекомендаций ВОЗ
 AGE_MIN_NORM = 18
 AGE_MAX_NORM = 60
 
-# Пороговые значения для веса (в кг) и роста (в метрах)
+# Пороговые значения для веса (в кг) и роста (в м.)
 WEIGHT_MIN_NORM = 10.0
 WEIGHT_MAX_NORM = 300.0
 
@@ -19,28 +19,8 @@ HEIGHT_MIN_NORM = 0.5
 HEIGHT_MAX_NORM = 2.5
 
 
-# Функции ввода
-def get_valid_number(
-    prompt: str,
-    min_val: float,
-    max_val: float,
-    converter,
-) -> float:
-    """Универсальный опросник чисел с валидацией типа и диапазона."""
-    while True:
-        try:
-            value = converter(input(prompt))
-            if min_val <= value <= max_val:
-                return value
-            print(
-                f'Ошибка: введите число в разумных пределах '
-                f'(от {min_val} до {max_val}).',
-            )
-        except ValueError:
-            print('Ошибка: пожалуйста, введите корректное число.')
+# ОСНОВНОЙ БЛОК СБОРА ДАННЫХ
 
-
-# Основной блок сбора данных
 # Ввод Имени
 while True:
     user_name = input('Как вас зовут? ').strip()
@@ -51,32 +31,47 @@ while True:
         'Пожалуйста, повторите ввод еще раз.',
     )
 
-# Ввод Возраста
-user_age = get_valid_number(
-    'Сколько вам лет? ',
-    AGE_MIN_NORM,
-    AGE_MAX_NORM,
-    int,
+
+ERROR_RANGE_MSG = (
+    'Ошибка: введите число в разумных пределах '
+    '(от {} до {}).'
 )
+ERROR_TYPE_MSG = 'Ошибка: пожалуйста, введите корректное число.'
+
+# Ввод Возраста
+while True:
+    try:
+        user_age = int(input('Сколько вам лет? '))
+        if AGE_MIN_NORM <= user_age <= AGE_MAX_NORM:
+            break
+        print(ERROR_RANGE_MSG.format(AGE_MIN_NORM, AGE_MAX_NORM))
+    except ValueError:
+        print(ERROR_TYPE_MSG)
 
 # Ввод Веса
-user_weight = get_valid_number(
-    'Какой у вас вес в кг? ',
-    WEIGHT_MIN_NORM,
-    WEIGHT_MAX_NORM,
-    float,
-)
+while True:
+    try:
+        user_weight = float(input('Какой у вас вес in кг? '))
+        if WEIGHT_MIN_NORM <= user_weight <= WEIGHT_MAX_NORM:
+            break
+        print(ERROR_RANGE_MSG.format(WEIGHT_MIN_NORM, WEIGHT_MAX_NORM))
+    except ValueError:
+        print(ERROR_TYPE_MSG)
 
 # Ввод Роста
-user_height = get_valid_number(
-    'Какой у вас рост в метрах (например, 1.75)? ',
-    HEIGHT_MIN_NORM,
-    HEIGHT_MAX_NORM,
-    float,
-)
+while True:
+    try:
+        user_height = float(
+            input('Какой у вас рост в метрах (например, 1.75)? '),
+        )
+        if HEIGHT_MIN_NORM <= user_height <= HEIGHT_MAX_NORM:
+            break
+        print(ERROR_RANGE_MSG.format(HEIGHT_MIN_NORM, HEIGHT_MAX_NORM))
+    except ValueError:
+        print(ERROR_TYPE_MSG)
 
 
-# Расчеты
+# РАСЧЕТЫ
 # Расчет Индекса Массы Тела (ИМТ). Рост в м.
 user_bmi = round(
     user_weight / (user_height ** 2),
@@ -90,7 +85,7 @@ water_needed_liters = round(
 )
 
 
-# Определение склонения слова "лет"
+# ОПРЕДЕЛЕНИЕ СКЛОНЕНИЯ СЛОВА "ЛЕТ"
 last_digit = user_age % 10
 last_two_digits = user_age % 100
 
@@ -102,7 +97,7 @@ if not (11 <= last_two_digits <= 14):
         age_word = 'года'
 
 
-# Интерпритация ИМТ по стандартам ВОЗ
+# ИНТЕРПРЕТАЦИЯ ИМТ ПО СТАНДАРТАМ ВОЗ
 bmi_recommendation = (
     'Ешьте!' if user_bmi < BMI_LOW_NORM else
     'Поститесь!' if user_bmi >= BMI_HIGH_NORM else
@@ -110,7 +105,7 @@ bmi_recommendation = (
 )
 
 
-# Вывод результата
+# ВЫВОД РЕЗУЛЬТАТА
 print(f'\nВозраст: {user_age} {age_word}')
 print(f'ИМТ: {user_bmi}')
 print(f'Статус: {bmi_recommendation}')
